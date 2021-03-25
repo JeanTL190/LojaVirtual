@@ -16,7 +16,7 @@ class CustomDrawer extends StatelessWidget {
         children: <Widget>[
           _buildDrawerBack(),
           ListView(
-            padding: EdgeInsets.only(top: 16),
+            padding: EdgeInsets.only(left: 32, top: 16),
             children: [
               Container(
                 margin: EdgeInsets.only(
@@ -28,7 +28,7 @@ class CustomDrawer extends StatelessWidget {
                   children: <Widget>[
                     Positioned(
                       top: 20,
-                      left: 32,
+                      left: 0,
                       child: Text(
                         "Estrela Oriental",
                         style: TextStyle(
