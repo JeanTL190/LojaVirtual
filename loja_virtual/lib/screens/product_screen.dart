@@ -13,6 +13,9 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final ProductData product;
+
+  String sabor;
+
   _ProductScreenState(this.product);
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,49 @@ class _ProductScreenState extends State<ProductScreen> {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: primaryColor),
-                )
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Sabores",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 34,
+                  child: GridView(
+                      padding: EdgeInsets.symmetric(vertical: 4.0),
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          mainAxisSpacing: 8,
+                          childAspectRatio: 0.25),
+                      children: product.sabores.map((e) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              sabor = e;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(11)),
+                              border: Border.all(
+                                  color: e == sabor
+                                      ? primaryColor
+                                      : Colors.grey[500],
+                                  width: 3),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(e),
+                          ),
+                        );
+                      }).toList()),
+                ),
               ],
             ),
           ),
