@@ -100,6 +100,37 @@ class _ProductScreenState extends State<ProductScreen> {
                         );
                       }).toList()),
                 ),
+                SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  height: 44,
+                  child: ElevatedButton(
+                    onPressed: sabor != null ? () {} : null,
+                    child: Text(
+                      "Adicionar ao Carrinho",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => sabor != null ? primaryColor : null),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Descrição",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  product.description,
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
           ),
