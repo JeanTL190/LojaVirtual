@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "769786899976-vfm84m43qlogm9cu1sntg2qtmecvcrjk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.tanli.loja_virtual",
+            "certificate_hash": "d800f3f84df86845b6e1910be01224393f54a2f3"
+          }
+        },
+        {
           "client_id": "769786899976-rtvsivkc87hchilgv2frsrge60i6hogr.apps.googleusercontent.com",
           "client_type": 3
         }
