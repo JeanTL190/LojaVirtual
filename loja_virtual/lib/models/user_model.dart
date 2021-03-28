@@ -68,7 +68,22 @@ class UserModel extends Model {
     notifyListeners();
   }
 
-  void recoverPass() {}
+  void recoverPass(String email, BuildContext context) {
+    _auth.sendPasswordResetEmail(email: email).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Confira seu e-mail!"),
+        backgroundColor: Theme.of(context).primaryColor,
+        duration: Duration(seconds: 2),
+      ));
+    }).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("E-mail inválido ou não cadastrado!"),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 2),
+      ));
+    });
+  }
+
   bool isLoggedIn() {
     return firebaseUser != null;
   }
