@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
@@ -105,6 +110,21 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  void _onSucess() {}
-  void _onFail() {}
+  void _onSucess() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Usuário criado com sucesso!"),
+      backgroundColor: Theme.of(context).primaryColor,
+      duration: Duration(seconds: 2),
+    ));
+    Future.delayed(Duration(seconds: 1))
+        .then((value) => Navigator.of(context).pop());
+  }
+
+  void _onFail() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Falha ao criar usuário!"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
+  }
 }
