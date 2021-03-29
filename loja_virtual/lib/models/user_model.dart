@@ -29,12 +29,10 @@ class UserModel extends Model {
       await _saveUserData(userData);
       onSucess();
       isLoading = false;
-      print("cheguei");
       notifyListeners();
     }).catchError((e) {
       onFail();
       isLoading = false;
-      print("cheguei2");
       notifyListeners();
     });
   }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:loja_virtual/formatters/telefoneFormatter.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
+
+import 'package:flutter/services.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -12,7 +16,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   final _addressController = TextEditingController();
-
+  final _phoneController = TextEditingController();
+  final _referenceController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: <Widget>[
                 TextFormField(
                   controller: _nameController,
-                  decoration: InputDecoration(hintText: "Nome Completo"),
+                  decoration: InputDecoration(
+                    hintText: "Nome Completo",
+                    icon: Icon(Icons.person),
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
                     if (text.isEmpty) return "Nome inválido!";
@@ -43,7 +51,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(hintText: "E-mail"),
+                  decoration: InputDecoration(
+                    hintText: "E-mail",
+                    icon: Icon(Icons.email),
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
                     if (text.isEmpty || !text.contains("@"))
@@ -55,7 +66,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 TextFormField(
                   controller: _passController,
-                  decoration: InputDecoration(hintText: "Senha"),
+                  decoration: InputDecoration(
+                    hintText: "Senha",
+                    icon: Icon(Icons.vpn_key),
+                  ),
                   obscureText: true,
                   validator: (text) {
                     if (text.isEmpty || text.length < 6)
@@ -66,12 +80,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 16,
                 ),
                 TextFormField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                    hintText: "Telefone",
+                    icon: Icon(
+                      Icons.phone,
+                    ),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: <TextInputFormatter>[
+                    LengthLimitingTextInputFormatter(15),
+                    FilteringTextInputFormatter.digitsOnly,
+                    TelefoneTextInputFormatter(),
+                  ],
+                  validator: (text) {
+                    if (text.isEmpty || text.length < 10)
+                      return "Telefone inválido!";
+                  },
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                TextFormField(
                   controller: _addressController,
-                  decoration: InputDecoration(hintText: "Endereço"),
-                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: "Endereço", icon: Icon(Icons.home_work)),
                   validator: (text) {
                     if (text.isEmpty) return "Endereço inválido!";
                   },
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                TextFormField(
+                  controller: _referenceController,
+                  decoration: InputDecoration(
+                      hintText: "Referênciais (Opcional)",
+                      icon: Icon(Icons.note_add)),
                 ),
                 SizedBox(
                   height: 16,
@@ -85,6 +130,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           "name": _nameController.text,
                           "email": _emailController.text,
                           "address": _addressController.text,
+                          "phone": _phoneController.text,
+                          "reference": _referenceController,
                         };
                         model.signUp(
                             userData: userData,

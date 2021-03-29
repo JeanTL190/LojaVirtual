@@ -49,7 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(hintText: "E-mail"),
+                    decoration: InputDecoration(
+                      hintText: "E-mail",
+                      icon: Icon(Icons.email),
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (text) {
                       if (text.isEmpty || !text.contains("@"))
@@ -61,7 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFormField(
                     controller: _passController,
-                    decoration: InputDecoration(hintText: "Senha"),
+                    decoration: InputDecoration(
+                      hintText: "Senha",
+                      icon: Icon(Icons.vpn_key),
+                    ),
                     obscureText: true,
                     validator: (text) {
                       if (text.isEmpty || text.length < 6)
