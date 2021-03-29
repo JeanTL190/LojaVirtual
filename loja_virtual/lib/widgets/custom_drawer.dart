@@ -31,16 +31,17 @@ class CustomDrawer extends StatelessWidget {
                   bottom: 8,
                 ),
                 padding: EdgeInsets.fromLTRB(0, 16, 16, 8),
-                height: 170,
+                height: 300,
                 child: Stack(
                   children: <Widget>[
                     Positioned(
                       top: 20,
                       left: 0,
-                      child: Text(
-                        "Estrela Oriental",
-                        style: TextStyle(
-                            fontSize: 34, fontWeight: FontWeight.bold),
+                      child: CircleAvatar(
+                        radius: 100,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(
+                            "https://www.area17.com.br/admin/fotos/estabelecimentos/est_11768_584021961b755.jpg"),
                       ),
                     ),
                     Positioned(
@@ -95,6 +96,14 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(
                   Icons.playlist_add_check, "Meus Pedidos", pageController, 3),
             ],
+          ),
+          Container(
+            margin: EdgeInsets.zero,
+            alignment: Alignment.bottomCenter,
+            child: Image.network(
+              "https://media-exp1.licdn.com/dms/image/C4D1BAQGyEYzMCILSGw/company-background_10000/0?e=2159024400&v=beta&t=Lx_8LHU_NMxFT1-Xip_mD2AQ3ctyInViuf3j8b37eLY",
+              fit: BoxFit.cover,
+            ),
           ),
         ],
       ),
