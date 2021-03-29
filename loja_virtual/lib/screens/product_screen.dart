@@ -14,6 +14,8 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final ProductData product;
 
+  final _obsController = TextEditingController();
+
   String sabor;
 
   _ProductScreenState(this.product);
@@ -130,6 +132,19 @@ class _ProductScreenState extends State<ProductScreen> {
                 Text(
                   product.description,
                   style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                TextField(
+                  controller: _obsController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Diga algo que necessite mudar no produto.",
+                    helperText: "Seja breve e objetivo.",
+                    labelText: "Observações",
+                  ),
+                  maxLines: 3,
                 ),
               ],
             ),
