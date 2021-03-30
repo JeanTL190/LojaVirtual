@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loja_virtual/formatters/telefoneFormatter.dart';
@@ -6,19 +7,25 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:flutter/services.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreenGoogle extends StatefulWidget {
+  final User _firebaseUser;
+  SignUpScreenGoogle(this._firebaseUser);
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _SignUpScreenGoogleState createState() =>
+      _SignUpScreenGoogleState(_firebaseUser);
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenGoogleState extends State<SignUpScreenGoogle> {
   final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = TextEditingController();
   final _referenceController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final User _firebaseUser;
+  _SignUpScreenGoogleState(this._firebaseUser) {
+    _nameController.text = _firebaseUser.displayName;
+    _phoneController.text = _firebaseUser.phoneNumber;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,36 +51,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
                     if (text.isEmpty) return "Nome inválido!";
-                  },
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: "E-mail",
-                    icon: Icon(Icons.email),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (text) {
-                    if (text.isEmpty || !text.contains("@"))
-                      return "E-mail inválido!";
-                  },
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: _passController,
-                  decoration: InputDecoration(
-                    hintText: "Senha",
-                    icon: Icon(Icons.vpn_key),
-                  ),
-                  obscureText: true,
-                  validator: (text) {
-                    if (text.isEmpty || text.length < 6)
-                      return "Senha inválida!";
                   },
                 ),
                 SizedBox(
@@ -128,20 +105,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (_formKey.currentState.validate()) {
                         Map<String, dynamic> userData = {
                           "name": _nameController.text,
-                          "email": _emailController.text,
+                          "email": _firebaseUser.email,
                           "address": _addressController.text,
                           "phone": _phoneController.text,
                           "reference": _referenceController.text,
                         };
-                        model.signUp(
-                            userData: userData,
-                            pass: _passController.text,
-                            onSucess: _onSucess,
-                            onFail: _onFail);
+                        model.saveUserDataGoogle(
+                            userData, _firebaseUser, context);
                       }
                     },
                     child: Text(
-                      "Cadastrar",
+                      "Salvar",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     style: ButtonStyle(
@@ -155,23 +129,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
       ),
     );
-  }
-
-  void _onSucess() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Usuário criado com sucesso!"),
-      backgroundColor: Theme.of(context).primaryColor,
-      duration: Duration(seconds: 2),
-    ));
-    Future.delayed(Duration(seconds: 1))
-        .then((value) => Navigator.of(context).pop());
-  }
-
-  void _onFail() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Falha ao criar usuário!"),
-      backgroundColor: Colors.redAccent,
-      duration: Duration(seconds: 2),
-    ));
   }
 }

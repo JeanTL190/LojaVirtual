@@ -118,6 +118,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               (states) => Theme.of(context).primaryColor)),
                     ),
                   ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    height: 44,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        model.signInWithGoogle(
+                            onFail: _onFail, context: context);
+                      },
+                      child: Text(
+                        "Entrar com o Google",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => Theme.of(context).primaryColor)),
+                    ),
+                  ),
                 ],
               ),
             );

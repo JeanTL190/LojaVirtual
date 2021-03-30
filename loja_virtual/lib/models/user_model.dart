@@ -1,17 +1,82 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:loja_virtual/screens/signupGoogle_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 
 class UserModel extends Model {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
   FirebaseAuth _auth = FirebaseAuth.instance;
   User firebaseUser;
   Map<String, dynamic> userData = Map();
   bool isLoading = false;
+  bool withGoogle = false;
   @override
   void addListener(listener) {
     super.addListener(listener);
     _loadCurrentUser();
+  }
+
+  Future<User> _getUser() async {
+    try {
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+      final UserCredential authResult =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final User user = authResult.user;
+      return user;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  void signInWithGoogle(
+      {@required VoidCallback onFail, @required BuildContext context}) async {
+    isLoading = true;
+    notifyListeners();
+    firebaseUser = await _getUser();
+    isLoading = false;
+    notifyListeners();
+
+    if (firebaseUser == null) {
+      onFail();
+    } else {
+      withGoogle = true;
+      DocumentSnapshot docUser = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(firebaseUser.uid)
+          .get();
+      print(docUser.exists);
+      if (docUser.exists) {
+        await _loadCurrentUser();
+        Navigator.of(context).pop();
+      } else {
+        Navigator.of(context).pop();
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SignUpScreenGoogle(firebaseUser)));
+      }
+    }
+  }
+
+  Future<Null> saveUserDataGoogle(
+      Map<String, dynamic> userData, User usuario, BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+    this.userData = userData;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(usuario.uid)
+        .set(userData);
+    isLoading = false;
+    notifyListeners();
+    Navigator.of(context).pop();
   }
 
   void signUp(
@@ -60,10 +125,19 @@ class UserModel extends Model {
   }
 
   void signOut() async {
-    await _auth.signOut();
-    userData = Map();
-    firebaseUser = null;
-    notifyListeners();
+    if (!withGoogle) {
+      await _auth.signOut();
+      userData = Map();
+      firebaseUser = null;
+      notifyListeners();
+    } else {
+      withGoogle = false;
+      await googleSignIn.signOut();
+      await _auth.signOut();
+      userData = Map();
+      firebaseUser = null;
+      notifyListeners();
+    }
   }
 
   void recoverPass(String email, BuildContext context) {
