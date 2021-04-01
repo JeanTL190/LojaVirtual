@@ -8,8 +8,11 @@ class CartProduct {
 
   int quantity;
   String sabor;
+  String observacao;
 
   ProductData productData;
+
+  CartProduct();
 
   CartProduct.fromDocument(DocumentSnapshot document) {
     cid = document.id;
@@ -17,6 +20,7 @@ class CartProduct {
     pid = document.data()["pid"];
     quantity = document.data()["quantity"];
     sabor = document.data()["sabor"];
+    observacao = document.data()["observacao"];
   }
 
   Map<String, dynamic> toMap() {
@@ -25,7 +29,8 @@ class CartProduct {
       "pid": pid,
       "quantity": quantity,
       "sabor": sabor,
-      "product": productData.toResumeMap(),
+      "observacao": observacao,
+      //"product": productData.toResumeMap(),
     };
   }
 }
