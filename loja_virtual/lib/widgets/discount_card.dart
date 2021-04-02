@@ -8,7 +8,8 @@ class DiscountCard extends StatefulWidget {
 }
 
 class _DiscountCardState extends State<DiscountCard> {
-  Color colorIcon;
+  Color _colorIcon;
+  IconData _iconTrailing = Icons.add;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,9 +18,11 @@ class _DiscountCardState extends State<DiscountCard> {
         onExpansionChanged: (value) {
           setState(() {
             if (value) {
-              colorIcon = Theme.of(context).primaryColor;
+              _colorIcon = Theme.of(context).primaryColor;
+              _iconTrailing = Icons.remove;
             } else {
-              colorIcon = Colors.grey[700];
+              _colorIcon = Colors.grey[700];
+              _iconTrailing = Icons.add;
             }
           });
         },
@@ -31,11 +34,11 @@ class _DiscountCardState extends State<DiscountCard> {
         ),
         leading: Icon(
           Icons.card_giftcard,
-          color: colorIcon,
+          color: _colorIcon,
         ),
         trailing: Icon(
-          Icons.add,
-          color: colorIcon,
+          _iconTrailing,
+          color: _colorIcon,
         ),
         children: <Widget>[
           Padding(
