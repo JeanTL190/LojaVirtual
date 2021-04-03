@@ -30,7 +30,7 @@ class CartProduct {
       "quantity": quantity,
       "sabor": sabor,
       "observacao": observacao,
-      //"product": productData.toResumeMap(),
+      "product": productData.toResumeMap(),
     };
   }
 }

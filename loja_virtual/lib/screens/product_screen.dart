@@ -149,6 +149,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               cartProduct.pid = product.id;
                               cartProduct.category = product.category;
                               cartProduct.observacao = _obsController.text;
+                              cartProduct.productData = product;
 
                               CartModel.of(context).addCartItem(cartProduct);
 
