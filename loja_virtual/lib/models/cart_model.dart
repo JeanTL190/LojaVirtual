@@ -108,7 +108,7 @@ class CartModel extends Model {
         await FirebaseFirestore.instance.collection("orders").add({
       "clientId": user.firebaseUser.uid,
       "products": products.map((cartProduct) => cartProduct.toMap()).toList(),
-      "shipPrice": productsPrice,
+      "shipPrice": shipPrice,
       "discount": discount,
       "totalPrice": productsPrice - discount + shipPrice,
       "status": 1
