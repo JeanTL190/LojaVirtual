@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (text) {
                       if (text.isEmpty || !text.contains("@"))
                         return "E-mail inválido!";
+                      return null;
                     },
                   ),
                   SizedBox(
@@ -72,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (text) {
                       if (text.isEmpty || text.length < 6)
                         return "Senha inválida!";
+                      return null;
                     },
                   ),
                   Align(

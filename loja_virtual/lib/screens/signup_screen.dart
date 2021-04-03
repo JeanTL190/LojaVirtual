@@ -4,8 +4,6 @@ import 'package:loja_virtual/formatters/telefoneFormatter.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:flutter/services.dart';
-
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -44,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
                     if (text.isEmpty) return "Nome inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -59,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (text) {
                     if (text.isEmpty || !text.contains("@"))
                       return "E-mail inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -74,6 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (text) {
                     if (text.isEmpty || text.length < 6)
                       return "Senha inválida!";
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -96,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (text) {
                     if (text.isEmpty || text.length < 10)
                       return "Telefone inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -107,6 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintText: "Endereço", icon: Icon(Icons.home_work)),
                   validator: (text) {
                     if (text.isEmpty) return "Endereço inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(

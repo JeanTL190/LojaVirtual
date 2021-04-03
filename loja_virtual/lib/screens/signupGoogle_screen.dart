@@ -5,8 +5,6 @@ import 'package:loja_virtual/formatters/telefoneFormatter.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:flutter/services.dart';
-
 class SignUpScreenGoogle extends StatefulWidget {
   final User _firebaseUser;
   SignUpScreenGoogle(this._firebaseUser);
@@ -51,6 +49,7 @@ class _SignUpScreenGoogleState extends State<SignUpScreenGoogle> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
                     if (text.isEmpty) return "Nome inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -73,6 +72,7 @@ class _SignUpScreenGoogleState extends State<SignUpScreenGoogle> {
                   validator: (text) {
                     if (text.isEmpty || text.length < 10)
                       return "Telefone inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -84,6 +84,7 @@ class _SignUpScreenGoogleState extends State<SignUpScreenGoogle> {
                       hintText: "Endereço", icon: Icon(Icons.home_work)),
                   validator: (text) {
                     if (text.isEmpty) return "Endereço inválido!";
+                    return null;
                   },
                 ),
                 SizedBox(
